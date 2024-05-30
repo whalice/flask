@@ -1,0 +1,32 @@
+<!--继承父膜板-->
+{% extends 'base.html' %}
+
+{% block content %}
+<p> {{movies|length}} Titles</p>
+<!--新增条目, 使用form元素-->
+<form method="post">
+    Name:<input type="text" name="title" autocomplete="off" required>
+    Year:<input type="text" name="year" required>
+        &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+    <input type="submit" name="submit" class="btn" value="添加">
+
+</form>
+<ul class="movie-list">
+    {% for movie in movies %}
+    <li>
+        {{movie.title}} - {{movie.year}}
+        <span class="float-right">
+            <a class="imdb" href="https://www.imdb.com/find?q={{movie.title}}">MIDB</a>
+            <span class="float-right">
+                <a class="btn" href="{{url_for('edit',movie_id=movie.id)}}">编辑</a>
+                <a class="btn" href="{{url_for('delete',movie_id=movie.id)}}" onclick="return confirm('Are you sure? ')">删除</a>
+            </span>
+
+        </span>
+    </li>
+    {% endfor %}
+</ul>
+
+<img class="totoro" src="{{url_for('static',filename='images/totoro.gif')}}"/>
+
+{% endblock%}
